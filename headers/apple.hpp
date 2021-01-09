@@ -9,8 +9,8 @@ private:
 	sf::RectangleShape Sprite;
 	int StartPosX{600};
 	int StartPosY{200};
-	int AppleSizeX{20};
-	int AppleSizeY{20};
+	int AppleSizeX{19};
+	int AppleSizeY{19};
 
 public:
 	Apple();

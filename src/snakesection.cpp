@@ -4,6 +4,8 @@ SnakeSection::SnakeSection(sf::Vector2f StartPosition)
 {
 	Section.setSize(sf::Vector2f(SnakeRectangleSizeX,SnakeRectangleSizeY));
 	Section.setFillColor(sf::Color::Green);
+	Section.setOutlineColor(sf::Color::Black);
+	Section.setOutlineThickness(1);
 	Section.setPosition(StartPosition);
 	Position = StartPosition;
 }

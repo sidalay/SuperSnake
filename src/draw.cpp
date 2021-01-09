@@ -32,6 +32,13 @@ void Engine::Draw()
 		Window.draw(GameOverText);
 		Window.draw(PressEnterText);
 	}
+
+	// Draw Paused
+	if (CurrentGameState == GameState::PAUSED)
+	{
+		Window.draw(PauseText);
+	}
+
 	// Display everything that has been set up previously
 	Window.display();
 }

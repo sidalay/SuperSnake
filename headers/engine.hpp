@@ -48,6 +48,7 @@ private:
 	sf::Text ScoreText;
 	sf::Text GameOverText;
 	sf::Text PressEnterText;
+	sf::Text PauseText;
 
 	sf::Time TimeSinceLastMove;
 

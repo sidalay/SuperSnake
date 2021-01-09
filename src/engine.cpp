@@ -14,32 +14,45 @@ Engine::Engine()
 
 	MainFont.loadFromFile("assets/fonts/slant_regular.ttf");          // Load in the text from assets/fonts
 
+	// TITLE BAR TITLE TEXT
 	SetupText(&TitleText, MainFont, "SUPER SNAKE++", 28, sf::Color::Blue);
 	sf::FloatRect TitleTextBounds = TitleText.getLocalBounds();
 	TitleText.setPosition(sf::Vector2f(Resolution.x / 2 - TitleTextBounds.width / 2, -9));
 
+	// TITLE BAR CURRENT LEVEL TEXT
 	SetupText(&CurrentLevelText, MainFont, "Level 1", 28, sf::Color::Blue);
 	CurrentLevelText.setPosition(sf::Vector2f(15, -9));
 	sf::FloatRect CurrentLevelTextBounds = CurrentLevelText.getGlobalBounds();
 
+	// TITLE BAR TOTAL APPLES EATEN TEXT
 	SetupText(&ApplesEatenText, MainFont, "Apples 0", 28, sf::Color::Blue);
 	ApplesEatenText.setPosition(sf::Vector2f(CurrentLevelTextBounds.left + CurrentLevelTextBounds.width + 20, -9));
 
+	// TITLE BAR SCORE TEXT
 	SetupText(&ScoreText, MainFont, "Score: " + std::to_string(Score), 28, sf::Color::Blue);
 	sf::FloatRect ScoreTextBounds = ScoreText.getGlobalBounds();
 	ScoreText.setPosition(sf::Vector2f(Resolution.x - ScoreTextBounds.width - 15, -9));
 
+	// GAME OVER TEXT
 	SetupText(&GameOverText, MainFont, "GAME OVER", 72, sf::Color::Yellow);
 	sf::FloatRect GameOverTextBounds = GameOverText.getLocalBounds();
 	GameOverText.setPosition(sf::Vector2f(Resolution.x / 2 - GameOverTextBounds.width / 2, 100));
 	GameOverText.setOutlineColor(sf::Color::Black);
 	GameOverText.setOutlineThickness(2);
 
+	// PRESS ENTER TO CONTINUE TEXT
 	SetupText(&PressEnterText, MainFont, "Press ENTER to start over", 38, sf::Color::Green);
 	sf::FloatRect PressEnterTextBounds = PressEnterText.getLocalBounds();
 	PressEnterText.setPosition(sf::Vector2f(Resolution.x / 2 - PressEnterTextBounds.width / 2, 200));
 	PressEnterText.setOutlineColor(sf::Color::Black);
 	PressEnterText.setOutlineThickness(2);
+
+	// PAUSE MENU TEXT
+	SetupText(&PauseText, MainFont, "PAUSED", 72, sf::Color::Yellow);
+	sf::FloatRect PauseTextBounds = PauseText.getLocalBounds();
+	PauseText.setPosition(sf::Vector2f(Resolution.x / 2 - PauseTextBounds.width / 2, 200));
+	PauseText.setOutlineColor(sf::Color::Black);
+	PauseText.setOutlineThickness(2);
 }
 
 void Engine::StartGame()

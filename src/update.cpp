@@ -91,7 +91,6 @@ void Engine::Update()
 		if (Snake[0].GetShape().getGlobalBounds().intersects(Apple.GetSprite().getGlobalBounds()))
 		{
 			// We hit the Apple, add more sections to the Snake, increase speed and move the apple
-			// TODO - check if its time for the next level
 			ApplesEatenThisLevel += 1;
 			ApplesEatenTotal += 1;
 			ApplesEatenText.setString("Apples " + std::to_string(ApplesEatenTotal));

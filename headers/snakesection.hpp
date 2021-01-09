@@ -9,8 +9,8 @@ class SnakeSection
 private:
 	sf::Vector2f Position;
 	sf::RectangleShape Section;
-	int SnakeRectangleSizeX{20};
-	int SnakeRectangleSizeY{20};
+	int SnakeRectangleSizeX{18};
+	int SnakeRectangleSizeY{18};
 
 public:
 	explicit SnakeSection(sf::Vector2f StartPosition);
