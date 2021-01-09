@@ -16,13 +16,13 @@ void Engine::Input()
 		if (Event.type == sf::Event::KeyPressed)
 		{
 			// Quit
-			if (Event.key.code == sf::Keyboard::LAlt)
+			if (Event.key.code == sf::Keyboard::Escape)
 			{
 				Window.close();
 			}
 
 			// Pause
-			if (Event.key.code == sf::Keyboard::Escape)
+			if (Event.key.code == sf::Keyboard::P)
 			{
 				TogglePause();
 			}
