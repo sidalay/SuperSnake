@@ -172,11 +172,10 @@ void Engine::MoveApple()
 				break;
 			}
 		}
-
 	}
 	while (BadLocation);
 
-	Apple.SetPosition(NewAppleLocation);
+	AppleInstance.SetPosition(NewAppleLocation);
 }
 
 void Engine::TogglePause()
@@ -185,10 +184,12 @@ void Engine::TogglePause()
 	{
 		LastGameState = CurrentGameState;
 		CurrentGameState = GameState::PAUSED;
+		MainAudio.pause();
 	}
 	else if (CurrentGameState == GameState::PAUSED)
 	{
 		CurrentGameState = LastGameState;
+		MainAudio.play();
 	}
 }
 

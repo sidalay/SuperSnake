@@ -87,10 +87,10 @@ void Engine::Update()
 			s.Update();
 		}
 
-		// Collision detection - Apple
-		if (Snake[0].GetShape().getGlobalBounds().intersects(Apple.GetSprite().getGlobalBounds()))
+		// Collision detection - AppleInstance
+		if (Snake[0].GetShape().getGlobalBounds().intersects(AppleInstance.GetSprite().getGlobalBounds()))
 		{
-			// We hit the Apple, add more sections to the Snake, increase speed and move the apple
+			// We hit the AppleInstance, add more sections to the Snake, increase speed and move the apple
 			ApplesEatenThisLevel += 1;
 			ApplesEatenTotal += 1;
 			ApplesEatenText.setString("Apples " + std::to_string(ApplesEatenTotal));

@@ -36,7 +36,7 @@ private:
 
 	int SectionsToAdd{};                // How many sections to add to the snake
 
-	Apple Apple;
+	Apple AppleInstance;
 	int ApplesEatenThisLevel{};
 	int ApplesEatenTotal{};
 	unsigned long long int Score{};

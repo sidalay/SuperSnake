@@ -11,8 +11,8 @@ void Engine::Draw()
 		Window.draw(w.GetShape());
 	}
 
-	// Draw Apple
-	Window.draw(Apple.GetSprite());
+	// Draw AppleInstance
+	Window.draw(AppleInstance.GetSprite());
 
 	// Draw Snake sections
 	for (auto& s:Snake)
