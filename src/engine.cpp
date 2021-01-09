@@ -260,7 +260,7 @@ void Engine::LoadLevel(int LevelNumber)
 			{
 				if (Line[x] == 'x')
 				{
-					WallSections.emplace_back(Wall(sf::Vector2f(x * 20, y * 20), sf::Vector2f(19, 20)));
+					WallSections.emplace_back(Wall(sf::Vector2f(x * 20, y * 20), sf::Vector2f(19, 19)));
 				}
 			}
 		}
