@@ -46,7 +46,7 @@ void Engine::Update()
 		Score += Snake.size() + (ApplesEatenTotal + 1);
 		ScoreText.setString("Score: " + std::to_string(Score));
 		sf::FloatRect ScoreTextBounds = ScoreText.getGlobalBounds();
-		ScoreText.setPosition(sf::Vector2f(Resolution.x - ScoreTextBounds.width - 15, -9));
+		ScoreText.setPosition(sf::Vector2f(Resolution.x - ScoreTextBounds.width - 15, -8));
 
 		// Do we need to grow the Snake?
 		if (SectionsToAdd)
@@ -95,7 +95,7 @@ void Engine::Update()
 			ApplesEatenTotal += 1;
 			ApplesEatenText.setString("Apples " + std::to_string(ApplesEatenTotal));
 			sf::FloatRect CurrentLevelTextBounds = CurrentLevelText.getGlobalBounds();
-			ApplesEatenText.setPosition(sf::Vector2f(CurrentLevelTextBounds.left + CurrentLevelTextBounds.width + 20, -9));
+			ApplesEatenText.setPosition(sf::Vector2f(CurrentLevelTextBounds.left + CurrentLevelTextBounds.width + 20, -8));
 
 			bool BeginningNewLevel = false;
 

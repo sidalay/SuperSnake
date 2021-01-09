@@ -21,10 +21,12 @@ void Engine::Draw()
 	}
 
 	// Draw Text
+	Window.draw(MainWindowFrame);
 	Window.draw(TitleText);
 	Window.draw(CurrentLevelText);
 	Window.draw(ApplesEatenText);
 	Window.draw(ScoreText);
+	Window.draw(KeyBindsText);
 
 	// Draw GameOver
 	if (CurrentGameState == GameState::GAMEOVER)

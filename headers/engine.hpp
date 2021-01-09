@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Audio.hpp>
 #include <vector>
 #include <deque>
 #include <fstream>
@@ -19,6 +20,10 @@ private:
 	sf::RenderWindow Window;
 	const unsigned int FPS{60};
 	static const sf::Time TimePerFrame;
+
+	// Main Window Frame
+	sf::Texture WindowFrame;
+	sf::Sprite MainWindowFrame;
 
 	std::vector<SnakeSection> Snake;
 
@@ -41,6 +46,7 @@ private:
 	int MaxLevels{};
 	std::vector<std::string> Levels;
 
+	// TEXT VARIABLES
 	sf::Font MainFont;
 	sf::Text TitleText;
 	sf::Text ApplesEatenText;
@@ -49,6 +55,10 @@ private:
 	sf::Text GameOverText;
 	sf::Text PressEnterText;
 	sf::Text PauseText;
+	sf::Text KeyBindsText;
+
+	// MUSIC VARIABLES
+	sf::Music MainAudio;
 
 	sf::Time TimeSinceLastMove;
 
@@ -90,6 +100,12 @@ public:
 
 	// Move apple function
 	void MoveApple();
+
+	// Load Audio
+	int CheckAudio();
+
+	// Load Sprites
+	int LoadWindowFrame();
 
 	// Check all of the files to add to the levels vector
 	void CheckLevelFiles();

@@ -15,23 +15,38 @@ Engine::Engine()
 	MainFont.loadFromFile("assets/fonts/slant_regular.ttf");          // Load in the text from assets/fonts
 
 	// TITLE BAR TITLE TEXT
-	SetupText(&TitleText, MainFont, "SUPER SNAKE++", 28, sf::Color::Blue);
+	SetupText(&TitleText, MainFont, "SUPER SNAKE++", 27, sf::Color::Cyan);
+	TitleText.setOutlineColor(sf::Color::Black);
+	TitleText.setOutlineThickness(2);
 	sf::FloatRect TitleTextBounds = TitleText.getLocalBounds();
-	TitleText.setPosition(sf::Vector2f(Resolution.x / 2 - TitleTextBounds.width / 2, -9));
+	TitleText.setPosition(sf::Vector2f(Resolution.x / 2 - TitleTextBounds.width / 2, -8));
 
 	// TITLE BAR CURRENT LEVEL TEXT
-	SetupText(&CurrentLevelText, MainFont, "Level 1", 28, sf::Color::Blue);
-	CurrentLevelText.setPosition(sf::Vector2f(15, -9));
+	SetupText(&CurrentLevelText, MainFont, "Level 1", 27, sf::Color::Cyan);
+	CurrentLevelText.setOutlineColor(sf::Color::Black);
+	CurrentLevelText.setOutlineThickness(2);
+	CurrentLevelText.setPosition(sf::Vector2f(15, -8));
 	sf::FloatRect CurrentLevelTextBounds = CurrentLevelText.getGlobalBounds();
 
 	// TITLE BAR TOTAL APPLES EATEN TEXT
-	SetupText(&ApplesEatenText, MainFont, "Apples 0", 28, sf::Color::Blue);
-	ApplesEatenText.setPosition(sf::Vector2f(CurrentLevelTextBounds.left + CurrentLevelTextBounds.width + 20, -9));
+	SetupText(&ApplesEatenText, MainFont, "Apples 0", 27, sf::Color::Cyan);
+	ApplesEatenText.setOutlineColor(sf::Color::Black);
+	ApplesEatenText.setOutlineThickness(2);
+	ApplesEatenText.setPosition(sf::Vector2f(CurrentLevelTextBounds.left + CurrentLevelTextBounds.width + 20, -8));
 
 	// TITLE BAR SCORE TEXT
-	SetupText(&ScoreText, MainFont, "Score: " + std::to_string(Score), 28, sf::Color::Blue);
+	SetupText(&ScoreText, MainFont, "Score: " + std::to_string(Score), 27, sf::Color::Cyan);
+	ScoreText.setOutlineColor(sf::Color::Black);
+	ScoreText.setOutlineThickness(2);
 	sf::FloatRect ScoreTextBounds = ScoreText.getGlobalBounds();
-	ScoreText.setPosition(sf::Vector2f(Resolution.x - ScoreTextBounds.width - 15, -9));
+	ScoreText.setPosition(sf::Vector2f(Resolution.x - ScoreTextBounds.width - 15, -8));
+
+	// BOTTOM BAR KEYBINDS TEXT
+	SetupText(&KeyBindsText, MainFont, "P: Pause      ESC: Quit", 27, sf::Color::Cyan);
+	KeyBindsText.setOutlineColor(sf::Color::Black);
+	KeyBindsText.setOutlineThickness(2);
+	sf::FloatRect  KeyBindsTextBounds = KeyBindsText.getLocalBounds();
+	KeyBindsText.setPosition(sf::Vector2f(20,571));
 
 	// GAME OVER TEXT
 	SetupText(&GameOverText, MainFont, "GAME OVER", 72, sf::Color::Yellow);
@@ -70,15 +85,16 @@ void Engine::StartGame()
 	LoadLevel(CurrentLevel);
 	NewSnake();
 	MoveApple();
+	LoadWindowFrame();
 	CurrentGameState = GameState::RUNNING;
 	LastGameState = CurrentGameState;
 	CurrentLevelText.setString("Level " + std::to_string(CurrentLevel));
 	ApplesEatenText.setString("Apples " + std::to_string(ApplesEatenTotal));
 	sf::FloatRect CurrentLevelTextBounds = CurrentLevelText.getGlobalBounds();
-	ApplesEatenText.setPosition(sf::Vector2f(CurrentLevelTextBounds.left + CurrentLevelTextBounds.width + 20, -9));
+	ApplesEatenText.setPosition(sf::Vector2f(CurrentLevelTextBounds.left + CurrentLevelTextBounds.width + 20, -8));
 	ScoreText.setString("Score: " + std::to_string(Score));
 	sf::FloatRect ScoreTextBounds = ScoreText.getGlobalBounds();
-	ScoreText.setPosition(sf::Vector2f(Resolution.x - ScoreTextBounds.width - 15, -9));
+	ScoreText.setPosition(sf::Vector2f(Resolution.x - ScoreTextBounds.width - 15, -8));
 }
 
 /*
@@ -100,7 +116,7 @@ void Engine::BeginNextLevel()
 
 	CurrentLevelText.setString("Level " + std::to_string(CurrentLevel));
 	sf::FloatRect CurrentLevelTextBounds = CurrentLevelText.getGlobalBounds();
-	ApplesEatenText.setPosition(sf::Vector2f(CurrentLevelTextBounds.left + CurrentLevelTextBounds.width + 20, -9));
+	ApplesEatenText.setPosition(sf::Vector2f(CurrentLevelTextBounds.left + CurrentLevelTextBounds.width + 20, -8));
 }
 
 // This is the initial snake created at the start of each level
@@ -140,7 +156,7 @@ void Engine::MoveApple()
 		// Check if it is in the Snake
 		for (auto& s:Snake)
 		{
-			if (s.GetShape().getGlobalBounds().intersects(sf::Rect<float>(NewAppleLocation.x, NewAppleLocation.y, 20, 20)))
+			if (s.GetShape().getGlobalBounds().intersects(sf::Rect<float>(NewAppleLocation.x, NewAppleLocation.y, 18, 18)))
 			{
 				BadLocation = true;
 				break;
@@ -150,7 +166,7 @@ void Engine::MoveApple()
 		// Check if it is in the walls
 		for (auto& w:WallSections)
 		{
-			if (w.GetShape().getGlobalBounds().intersects(sf::Rect<float>(NewAppleLocation.x, NewAppleLocation.y, 20, 20)))
+			if (w.GetShape().getGlobalBounds().intersects(sf::Rect<float>(NewAppleLocation.x, NewAppleLocation.y, 18, 18)))
 			{
 				BadLocation = true;
 				break;
@@ -182,6 +198,25 @@ void Engine::SetupText(sf::Text *TextItem, const sf::Font &Font, const sf::Strin
 	TextItem->setString(Value);
 	TextItem->setCharacterSize(Size);
 	TextItem->setFillColor(Color);
+}
+
+int Engine::CheckAudio()
+{
+	if (!MainAudio.openFromFile("assets/music/snakebeat.flac"))
+	{
+		return EXIT_FAILURE;
+	}
+	return 0;
+}
+
+int Engine::LoadWindowFrame() {
+	if (!WindowFrame.loadFromFile("assets/image/snakeframe.png"))
+	{
+		return EXIT_FAILURE;
+	}
+	sf::Sprite TempLoad(WindowFrame);
+	MainWindowFrame = TempLoad;
+	return 0;
 }
 
 /*
@@ -225,7 +260,7 @@ void Engine::LoadLevel(int LevelNumber)
 			{
 				if (Line[x] == 'x')
 				{
-					WallSections.emplace_back(Wall(sf::Vector2f(x * 20, y * 20), sf::Vector2f(20, 20)));
+					WallSections.emplace_back(Wall(sf::Vector2f(x * 20, y * 20), sf::Vector2f(19, 20)));
 				}
 			}
 		}
@@ -236,6 +271,9 @@ void Engine::LoadLevel(int LevelNumber)
 void Engine::Run()
 {
 	sf::Clock Clock;
+
+	CheckAudio();
+	MainAudio.play();
 
 	// Main loop - runs until the window is closed
 	while (Window.isOpen())
