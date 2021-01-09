@@ -59,6 +59,7 @@ private:
 
 	// MUSIC VARIABLES
 	sf::Music MainAudio;
+	float VolumeLevel{35};
 
 	sf::Time TimeSinceLastMove;
 
@@ -103,6 +104,9 @@ public:
 
 	// Load Audio
 	int CheckAudio();
+	// Raise & Lower Volume
+	void LowerVolume();
+	void RaiseVolume();
 
 	// Load Sprites
 	int LoadWindowFrame();

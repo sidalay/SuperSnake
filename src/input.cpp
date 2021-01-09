@@ -22,7 +22,7 @@ void Engine::Input()
 			}
 
 			// Pause
-			if (Event.key.code == sf::Keyboard::P)
+			if (Event.key.code == sf::Keyboard::Space)
 			{
 				TogglePause();
 			}
@@ -37,6 +37,17 @@ void Engine::Input()
 			}
 
 			// TODO - Volume Modification
+
+			// Lower Volume Level
+			if (Event.key.code == sf::Keyboard::J)
+			{
+				LowerVolume();
+			}
+
+			if (Event.key.code == sf::Keyboard::K)
+			{
+				RaiseVolume();
+			}
 
 			// Direction
 			if (Event.key.code == sf::Keyboard::Up)

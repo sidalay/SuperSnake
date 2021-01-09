@@ -42,11 +42,11 @@ Engine::Engine()
 	ScoreText.setPosition(sf::Vector2f(Resolution.x - ScoreTextBounds.width - 15, -8));
 
 	// BOTTOM BAR KEYBINDS TEXT
-	SetupText(&KeyBindsText, MainFont, "P: Pause      ESC: Quit", 27, sf::Color::Cyan);
+	SetupText(&KeyBindsText, MainFont, "esc: menu  /   spacebar: pause   /   vol up: k   vol down: j", 20, sf::Color::Cyan);
 	KeyBindsText.setOutlineColor(sf::Color::Black);
 	KeyBindsText.setOutlineThickness(2);
 	sf::FloatRect  KeyBindsTextBounds = KeyBindsText.getLocalBounds();
-	KeyBindsText.setPosition(sf::Vector2f(20,571));
+	KeyBindsText.setPosition(sf::Vector2f(20,575));
 
 	// GAME OVER TEXT
 	SetupText(&GameOverText, MainFont, "GAME OVER", 72, sf::Color::Yellow);
@@ -210,6 +210,24 @@ int Engine::CheckAudio()
 	return 0;
 }
 
+void Engine::LowerVolume()
+{
+	if (VolumeLevel > 0.f)
+	{
+		VolumeLevel -= 5;
+	}
+	MainAudio.setVolume(VolumeLevel);
+}
+
+void Engine::RaiseVolume()
+{
+	if (VolumeLevel < 100.f)
+	{
+		VolumeLevel += 5;
+	}
+	MainAudio.setVolume(VolumeLevel);
+}
+
 int Engine::LoadWindowFrame() {
 	if (!WindowFrame.loadFromFile("assets/image/snakeframe.png"))
 	{
@@ -274,7 +292,9 @@ void Engine::Run()
 	sf::Clock Clock;
 
 	CheckAudio();
+	MainAudio.setVolume(50);
 	MainAudio.play();
+	MainAudio.setLoop(true);
 
 	// Main loop - runs until the window is closed
 	while (Window.isOpen())
