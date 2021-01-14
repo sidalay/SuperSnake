@@ -70,6 +70,7 @@ void Engine::Input()
 	}
 }
 
+
 void Engine::AddDirection(int NewDirection)
 {
 	if (DirectionQueue.empty())

@@ -82,10 +82,15 @@ void Engine::StartGame()
 	ApplesEatenThisLevel = 0;
 	ApplesEatenTotal = 0;
 	CurrentLevel = 1;
+	LoadBackgroundTexture();
+	LoadWindowFrame();
 	LoadLevel(CurrentLevel);
+	LoadSnakeHead();
+	LoadSnakeBody();
+	LoadSnakeTail();
+	LoadSnakeTurn();
 	NewSnake();
 	MoveApple();
-	LoadWindowFrame();
 	CurrentGameState = GameState::RUNNING;
 	LastGameState = CurrentGameState;
 	CurrentLevelText.setString("Level " + std::to_string(CurrentLevel));
@@ -123,16 +128,17 @@ void Engine::BeginNextLevel()
 void Engine::NewSnake()
 {
 	Snake.clear();
-	Snake.emplace_back(sf::Vector2f(StartPosX,StartPosY));
-	Snake.emplace_back(sf::Vector2f(StartPosX - 20,StartPosY));
-	Snake.emplace_back(sf::Vector2f(StartPosX - 40,StartPosY));
+	Snake.emplace_back(sf::Vector2f(StartPosX,StartPosY), SnakeHeadTexture, GetDirectionAngle());
+	Snake.emplace_back(sf::Vector2f(StartPosX - 20,StartPosY), SnakeBodyTexture, GetDirectionAngle());
+	Snake.emplace_back(sf::Vector2f(StartPosX - 40,StartPosY), SnakeTailTexture, GetDirectionAngle());
 }
 
 // Just add the section at the same position as the last section of the snake, it will follow normally.
 void Engine::AddSnakeSection()
 {
-	sf::Vector2f NewSectionPosition = Snake[Snake.size() - 1].GetPosition();
-	Snake.emplace_back(NewSectionPosition);
+	sf::Vector2f NewSectionPosition = Snake[Snake.size() - 2].GetPosition();
+
+	Snake.insert(Snake.end() - 1, {NewSectionPosition, SnakeBodyTexture, GetDirectionAngle()});
 }
 
 void Engine::MoveApple()
@@ -156,7 +162,7 @@ void Engine::MoveApple()
 		// Check if it is in the Snake
 		for (auto& s:Snake)
 		{
-			if (s.GetShape().getGlobalBounds().intersects(sf::Rect<float>(NewAppleLocation.x, NewAppleLocation.y, 18, 18)))
+			if (s.GetShape().getGlobalBounds().intersects(sf::Rect<float>(NewAppleLocation.x, NewAppleLocation.y, 20, 20)))
 			{
 				BadLocation = true;
 				break;
@@ -166,7 +172,7 @@ void Engine::MoveApple()
 		// Check if it is in the walls
 		for (auto& w:WallSections)
 		{
-			if (w.GetShape().getGlobalBounds().intersects(sf::Rect<float>(NewAppleLocation.x, NewAppleLocation.y, 18, 18)))
+			if (w.GetShape().getGlobalBounds().intersects(sf::Rect<float>(NewAppleLocation.x, NewAppleLocation.y, 20, 20)))
 			{
 				BadLocation = true;
 				break;
@@ -193,98 +199,26 @@ void Engine::TogglePause()
 	}
 }
 
-void Engine::SetupText(sf::Text *TextItem, const sf::Font &Font, const sf::String &Value, int Size, sf::Color Color)
+// Used to check the orientation of previous Snake to spawn proper sprite orientation for current Snake
+float Engine::GetDirectionAngle() const
 {
-	TextItem->setFont(Font);
-	TextItem->setString(Value);
-	TextItem->setCharacterSize(Size);
-	TextItem->setFillColor(Color);
-}
-
-int Engine::CheckAudio()
-{
-	if (!MainAudio.openFromFile("assets/music/snakebeat.flac"))
+	float SnakeOrientationAngle{};
+	switch (SnakeDirection)
 	{
-		return EXIT_FAILURE;
+		case Direction::UP:
+			SnakeOrientationAngle = 270.0;
+			break;
+		case Direction::DOWN:
+			SnakeOrientationAngle = 90.0;
+			break;
+		case Direction::LEFT:
+			SnakeOrientationAngle = 180.0;
+			break;
+		case Direction::RIGHT:
+			SnakeOrientationAngle = 0.0;
+			break;
 	}
-	return 0;
-}
-
-void Engine::LowerVolume()
-{
-	if (VolumeLevel > 0.f)
-	{
-		VolumeLevel -= 5;
-	}
-	MainAudio.setVolume(VolumeLevel);
-}
-
-void Engine::RaiseVolume()
-{
-	if (VolumeLevel < 100.f)
-	{
-		VolumeLevel += 5;
-	}
-	MainAudio.setVolume(VolumeLevel);
-}
-
-int Engine::LoadWindowFrame() {
-	if (!WindowFrame.loadFromFile("assets/image/snakeframe.png"))
-	{
-		return EXIT_FAILURE;
-	}
-	sf::Sprite TempLoad(WindowFrame);
-	MainWindowFrame = TempLoad;
-	return 0;
-}
-
-/*
- * Check the levels manifest file and make sure that we can open each level file.
- * Add good level file names to the 'levels' vector and increment the MaxLevels.
- */
-void Engine::CheckLevelFiles()
-{
-	// Load the levels manifest file
-	std::ifstream LevelsManifest ("assets/levels/levels.txt");
-	std::ifstream TestFile;
-	for (std::string ManifestLine; std::getline(LevelsManifest, ManifestLine);)
-	{
-		// Check that we can open the level file
-		TestFile.open("assets/levels/" + ManifestLine);
-		if (TestFile.is_open())
-		{
-			// The level file opens, lets add it to the list of available levels
-			Levels.emplace_back("assets/levels/" + ManifestLine);
-			TestFile.close();
-			MaxLevels ++;
-		}
-	}
-}
-
-/*
- * Load a level from a file and check for 'x' characters to add wall sections
- * @param LevelNumber int - the number of the level to load
- */
-void Engine::LoadLevel(int LevelNumber)
-{
-	std::string LevelFile = Levels[LevelNumber - 1];
-	std::ifstream Level (LevelFile);
-	std::string Line;
-	if (Level.is_open())
-	{
-		for (int y = 0; y < 30; y++)
-		{
-			std::getline(Level, Line);
-			for (int x = 0; x <40; x++)
-			{
-				if (Line[x] == 'x')
-				{
-					WallSections.emplace_back(Wall(sf::Vector2f(x * 20, y * 20), sf::Vector2f(19, 19)));
-				}
-			}
-		}
-	}
-	Level.close();
+	return SnakeOrientationAngle;
 }
 
 void Engine::Run()

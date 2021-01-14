@@ -25,6 +25,16 @@ private:
 	sf::Texture WindowFrame;
 	sf::Sprite MainWindowFrame;
 
+	// Background Image
+	sf::Texture BackgroundTexture;
+	sf::Sprite BackgroundSprite;
+
+	// Snake Texture Loading
+	sf::Texture SnakeHeadTexture;
+	sf::Texture SnakeBodyTexture;
+	sf::Texture SnakeTailTexture;
+	sf::Texture SnakeTurnTexture;
+
 	std::vector<SnakeSection> Snake;
 
 	int SnakeDirection{};
@@ -73,6 +83,7 @@ public:
 	// Constructor
 	Engine();
 
+
 	// Start the Game
 	void StartGame();
 
@@ -81,40 +92,45 @@ public:
 
 	// Draw to screen
 	void Draw();
+
 	// Update screen
 	void Update();
 
-	// Setup Text to be displayed on screen
-	static void SetupText(sf::Text *TextItem, const sf::Font &Font, const sf::String &Value, int Size, sf::Color Color);
-
-	// Create events (for ex. closing window)
-	void Input();
-	// Add a direction
+	// Input Controls
+	void Input();           // Create events (for ex. closing window)
 	void AddDirection(int);
-	// Add pausing capability
+	float GetDirectionAngle() const;
 	void TogglePause();
 
-	// Create the initial snake at start of game
-	void NewSnake();
-	// Add a new section to the snake
-	void AddSnakeSection();
+	void NewSnake();        // Create the initial snake at start of game
+	void AddSnakeSection(); // Add a new section to the snake
 
 	// Move apple function
 	void MoveApple();
 
-	// Load Audio
+	// Audio Controls
 	int CheckAudio();
-	// Raise & Lower Volume
 	void LowerVolume();
 	void RaiseVolume();
 
-	// Load Sprites
-	int LoadWindowFrame();
+	// Setup Text to be displayed on screen
+	static void SetupText(sf::Text *TextItem, const sf::Font &Font, const sf::String &Value, int Size, sf::Color Color);
+	void TitleBarText();
+	void BottomBarText();
+	void GameOverMessageText();
+	void PauseMenuText();
 
 	// Check all of the files to add to the levels vector
 	void CheckLevelFiles();
-	// Load the Level
 	void LoadLevel(int LevelNumber);
+
+	// Load Textures
+	int LoadWindowFrame();
+	int LoadBackgroundTexture();
+	int LoadSnakeHead();
+	int LoadSnakeBody();
+	int LoadSnakeTail();
+	int LoadSnakeTurn();
 
 	// The main loop will be in the run function
 	void Run();

@@ -11,22 +11,26 @@ void Engine::Draw()
 		Window.draw(w.GetShape());
 	}
 
-	// Draw AppleInstance
-	Window.draw(AppleInstance.GetSprite());
-
-	// Draw Snake sections
-	for (auto& s:Snake)
-	{
-		Window.draw(s.GetShape());
-	}
-
 	// Draw Text
+//	Window.draw(BackgroundSprite);
 	Window.draw(MainWindowFrame);
 	Window.draw(TitleText);
 	Window.draw(CurrentLevelText);
 	Window.draw(ApplesEatenText);
 	Window.draw(ScoreText);
 	Window.draw(KeyBindsText);
+
+	// Draw AppleInstance
+//	Window.draw(AppleInstance.GetSprite());
+	Window.draw(AppleInstance.GetAppleSprite());
+
+	// Draw Snake sections
+	for (auto& s:Snake)
+	{
+//		Window.draw(s.GetShape());
+		Window.draw(s.GetSnakeSprite());
+	}
+
 
 	// Draw GameOver
 	if (CurrentGameState == GameState::GAMEOVER)

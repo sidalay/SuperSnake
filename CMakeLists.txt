@@ -3,7 +3,7 @@ project(Snake)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(${PROJECT_NAME} src/main.cpp src/engine.cpp headers/engine.hpp src/draw.cpp src/input.cpp src/snakesection.cpp headers/snakesection.hpp src/update.cpp src/apple.cpp headers/apple.hpp src/wall.cpp headers/wall.hpp)
+add_executable(${PROJECT_NAME} src/main.cpp src/engine.cpp headers/engine.hpp src/engine_draw.cpp src/engine_input.cpp src/snakesection.cpp headers/snakesection.hpp src/engine_update.cpp src/apple.cpp headers/apple.hpp src/wall.cpp headers/wall.hpp src/engine_textures.cpp src/engine_audio.cpp src/engine_levels.cpp src/engine_text.cpp)
 
 include_directories(headers)
 

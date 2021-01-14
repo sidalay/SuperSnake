@@ -60,15 +60,19 @@ void Engine::Update()
 		{
 			case Direction::UP:
 				Snake[0].SetPosition(sf::Vector2f(ThisSectionPosition.x, ThisSectionPosition.y - 20));
+				Snake[0].GetSnakeSprite().setRotation(270.f);
 				break;
 			case Direction::DOWN:
 				Snake[0].SetPosition(sf::Vector2f(ThisSectionPosition.x, ThisSectionPosition.y + 20));
+				Snake[0].GetSnakeSprite().setRotation(90.f);
 				break;
 			case Direction::LEFT:
 				Snake[0].SetPosition(sf::Vector2f(ThisSectionPosition.x - 20, ThisSectionPosition.y));
+				Snake[0].GetSnakeSprite().setRotation(180.f);
 				break;
 			case Direction::RIGHT:
 				Snake[0].SetPosition(sf::Vector2f(ThisSectionPosition.x + 20, ThisSectionPosition.y));
+				Snake[0].GetSnakeSprite().setRotation(0.f);
 				break;
 		}
 
@@ -79,6 +83,21 @@ void Engine::Update()
 			ThisSectionPosition = Snake[s].GetPosition();
 			Snake[s].SetPosition(LastSectionPosition);
 			LastSectionPosition = ThisSectionPosition;
+
+			// Get the previous Snake section orientation and set it for the current snake section
+//			Snake[s].GetSnakeSprite().setRotation(Snake[s-1].GetSnakeSprite().getRotation());
+		}
+
+		// Rotate the snake body and tail pieces
+		static int NodeCounter{1};
+		if (Snake[NodeCounter].GetSnakeSprite().getRotation() != GetDirectionAngle())
+		{
+			Snake[NodeCounter].GetSnakeSprite().setRotation(GetDirectionAngle());
+			++NodeCounter;
+			if (NodeCounter > Snake.size())
+			{
+				NodeCounter = 1;
+			}
 		}
 
 		// Run Snake section update functions
@@ -86,6 +105,7 @@ void Engine::Update()
 		{
 			s.Update();
 		}
+
 
 		// Collision detection - AppleInstance
 		if (Snake[0].GetShape().getGlobalBounds().intersects(AppleInstance.GetSprite().getGlobalBounds()))
