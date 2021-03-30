@@ -53,18 +53,22 @@ void Engine::Input()
 			if (Event.key.code == sf::Keyboard::Up)
 			{
 				AddDirection(Direction::UP);
+				TurningTiles.emplace_back(1, 270.f);
 			}
 			else if (Event.key.code == sf::Keyboard::Down)
 			{
 				AddDirection(Direction::DOWN);
+				TurningTiles.emplace_back(1, 90.f);
 			}
 			else if (Event.key.code == sf::Keyboard::Left)
 			{
 				AddDirection(Direction::LEFT);
+				TurningTiles.emplace_back(1, 180.f);
 			}
 			else if (Event.key.code == sf::Keyboard::Right)
 			{
 				AddDirection(Direction::RIGHT);
+				TurningTiles.emplace_back(1, 0.f);
 			}
 		}
 	}

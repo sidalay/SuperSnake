@@ -1,3 +1,7 @@
+//
+// Created by Sidalay on 3/30/2021.
+//
+
 #include "engine.hpp"
 
 void Engine::Update()
@@ -76,27 +80,44 @@ void Engine::Update()
 				break;
 		}
 
-
-		// Update the snake tail positions
+		// Update the snake body & tail positions
 		for (int s = 1; s < Snake.size(); s++)
 		{
 			ThisSectionPosition = Snake[s].GetPosition();
 			Snake[s].SetPosition(LastSectionPosition);
 			LastSectionPosition = ThisSectionPosition;
-
-			// Get the previous Snake section orientation and set it for the current snake section
-//			Snake[s].GetSnakeSprite().setRotation(Snake[s-1].GetSnakeSprite().getRotation());
 		}
 
-		// Rotate the snake body and tail pieces
-		static int NodeCounter{1};
-		if (Snake[NodeCounter].GetSnakeSprite().getRotation() != GetDirectionAngle())
+		// Set the body turn sprite and rotate the snake body and tail pieces
+		for (auto& t:TurningTiles)
 		{
-			Snake[NodeCounter].GetSnakeSprite().setRotation(GetDirectionAngle());
-			++NodeCounter;
-			if (NodeCounter > Snake.size())
+			Snake[t.first].GetSnakeSprite().setRotation(t.second);
+
+			if (t.first != Snake.size() - 1)
 			{
-				NodeCounter = 1;
+				Snake[t.first].GetSnakeSprite().setTexture(SnakeTurnTexture);
+				auto TestVariable = Snake[t.first +1].GetSnakeSprite().getRotation();
+				if (TestVariable == 0)
+				{
+					TestVariable = 360;
+				}
+				if (t.second < TestVariable)
+				{
+					Snake[t.first].GetSnakeSprite().setRotation((static_cast<int>(t.second) - 90 + 360) % 360);
+				}
+			}
+
+			// set the piece back to regular body sprite
+			if (t.first - 1 != 0)
+			{
+				Snake[t.first-1].GetSnakeSprite().setTexture(SnakeBodyTexture);
+			}
+
+			++t.first;
+			if (t.first >= Snake.size())
+			{
+				TurningTiles.erase(TurningTiles.begin());
+				break;
 			}
 		}
 
@@ -135,8 +156,6 @@ void Engine::Update()
 				Speed++;
 				MoveApple();
 			}
-
-
 		}
 
 		// Collision detection - Snake body

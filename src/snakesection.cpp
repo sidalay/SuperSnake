@@ -1,7 +1,7 @@
 #include "snakesection.hpp"
 
 SnakeSection::SnakeSection(sf::Vector2f StartPosition, const sf::Texture& SnakeSkinTexture, float SnakeDirection)
-	: SnakeSkinSprite{SnakeSkinTexture}
+		: SnakeSkinSprite{SnakeSkinTexture}
 {
 	Section.setSize(sf::Vector2f(SnakeRectangleSizeX,SnakeRectangleSizeY));
 //	Section.setFillColor(sf::Color::Green);

@@ -1,6 +1,7 @@
 #include "engine.hpp"
 
-int Engine::LoadWindowFrame() {
+int Engine::LoadWindowFrame()
+{
 	if (!WindowFrame.loadFromFile("assets/image/snakeframe.png"))
 	{
 		return EXIT_FAILURE;

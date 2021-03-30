@@ -35,7 +35,9 @@ private:
 	sf::Texture SnakeTailTexture;
 	sf::Texture SnakeTurnTexture;
 
-	std::vector<SnakeSection> Snake;
+	std::vector<SnakeSection> Snake{};
+
+	std::vector<std::pair<int, float>> TurningTiles;
 
 	int SnakeDirection{};
 	std::deque<int> DirectionQueue;     // Queue for direction key presses
@@ -49,7 +51,7 @@ private:
 	Apple AppleInstance;
 	int ApplesEatenThisLevel{};
 	int ApplesEatenTotal{};
-	unsigned long long int Score{};
+	unsigned long long Score{};
 
 	std::vector<Wall> WallSections;
 	int CurrentLevel{};
@@ -95,6 +97,9 @@ public:
 
 	// Update screen
 	void Update();
+
+	// Save the snake section pos and rotation value to turn snake section pieces
+	void SnakeTurningTile();
 
 	// Input Controls
 	void Input();           // Create events (for ex. closing window)

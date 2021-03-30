@@ -184,6 +184,11 @@ void Engine::MoveApple()
 	AppleInstance.SetPosition(NewAppleLocation);
 }
 
+void Engine::SnakeTurningTile()
+{
+
+}
+
 void Engine::TogglePause()
 {
 	if (CurrentGameState == GameState::RUNNING)
