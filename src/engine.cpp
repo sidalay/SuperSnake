@@ -1,4 +1,4 @@
-#include "../headers/engine.hpp"
+#include "engine.hpp"
 
 const sf::Time Engine::TimePerFrame = sf::seconds(1.f/60.f);
 
@@ -45,7 +45,7 @@ Engine::Engine()
 	SetupText(&KeyBindsText, MainFont, "esc: menu  /   spacebar: pause   /   vol up: k   vol down: j", 20, sf::Color::Cyan);
 	KeyBindsText.setOutlineColor(sf::Color::Black);
 	KeyBindsText.setOutlineThickness(2);
-	sf::FloatRect  KeyBindsTextBounds = KeyBindsText.getLocalBounds();
+	// sf::FloatRect  KeyBindsTextBounds = KeyBindsText.getLocalBounds();
 	KeyBindsText.setPosition(sf::Vector2f(20,575));
 
 	// GAME OVER TEXT

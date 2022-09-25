@@ -81,7 +81,7 @@ void Engine::Update()
 		}
 
 		// Update the snake body & tail positions
-		for (int s = 1; s < Snake.size(); s++)
+		for (int s = 1; s < static_cast<int>(Snake.size()); s++)
 		{
 			ThisSectionPosition = Snake[s].GetPosition();
 			Snake[s].SetPosition(LastSectionPosition);
@@ -93,7 +93,7 @@ void Engine::Update()
 		{
 			Snake[t.first].GetSnakeSprite().setRotation(t.second);
 
-			if (t.first != Snake.size() - 1)
+			if (t.first != static_cast<int>(Snake.size()) - 1)
 			{
 				Snake[t.first].GetSnakeSprite().setTexture(SnakeTurnTexture);
 				auto TestVariable = Snake[t.first +1].GetSnakeSprite().getRotation();
@@ -114,7 +114,7 @@ void Engine::Update()
 			}
 
 			++t.first;
-			if (t.first >= Snake.size())
+			if (t.first >= static_cast<int>(Snake.size()))
 			{
 				TurningTiles.erase(TurningTiles.begin());
 				break;
@@ -159,7 +159,7 @@ void Engine::Update()
 		}
 
 		// Collision detection - Snake body
-		for (int s = 1; s < Snake.size(); s++)
+		for (int s = 1; s < static_cast<int>(Snake.size()); s++)
 		{
 			if (Snake[0].GetShape().getGlobalBounds().intersects(Snake[s].GetShape().getGlobalBounds()))
 			{
