@@ -2,3 +2,4 @@
 .idea
 *.exe
 cmake-build-debug
+.VSCodeCounter

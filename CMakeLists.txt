@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.17)
 project(SuperSnake)
 
-find_package(SFML COMPONENTS graphics audio network window system REQUIRED)
+find_package(SFML 2.5.1 COMPONENTS graphics audio network window system REQUIRED)
 if (NOT SFML_FOUND)
     include(FetchContent)
     FetchContent_Declare(SFML
