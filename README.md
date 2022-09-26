@@ -1,5 +1,8 @@
 # SuperSnake
-Snake clone using SFML (This is my first game)
+Snake clone made with C++ & SFML 
+
+:grin: (My first game)
+:snake: :apple: 
 
 ![SuperSnake_PVsJtggzUC](https://user-images.githubusercontent.com/72498122/192173227-8152be4e-523b-4182-b50a-9fc9c9379910.png)
 
